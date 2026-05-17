@@ -275,7 +275,7 @@ def plot_cross_scatter(
             zorder      = 4,
         )
         for r in sub:
-            ax.annotate(r["short"], (r["db"], r["d"]),
+            ax.annotate(r["model"], (r["db"], r["d"]),
                         fontsize=6.5, xytext=(3, 3),
                         textcoords="offset points")
     ax.axhline(0,    color="black",   lw=0.6)
