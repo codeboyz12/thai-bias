@@ -54,6 +54,7 @@ class EmbedderBase(ABC):
         self.model = SentenceTransformer(
             model_name,
             device=DEVICE,
+	    trust_remote_code=True
         )
         # cast weights เป็น fp16 บน GPU เพื่อลด VRAM
         if config.use_fp16 and DEVICE == "cuda":
