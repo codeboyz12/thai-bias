@@ -51,11 +51,20 @@ class EmbedderBase(ABC):
         self.model_name = model_name
         self.config     = config
         log.info("Loading %s on %s", model_name, DEVICE)
+
+        # เพิ่มใน __init__ ของ EmbedderBase
+        if "gte-multilingual" in model_name:
+            # force CPU เพื่อหลีกเลี่ยง CUDA assert
+            device_override = "cpu"
+        else:
+            device_override = DEVICE
+
         self.model = SentenceTransformer(
             model_name,
-            device=DEVICE,
-	    trust_remote_code=True
+            device            = device_override,
+            trust_remote_code = True,
         )
+        
         # cast weights เป็น fp16 บน GPU เพื่อลด VRAM
         if config.use_fp16 and DEVICE == "cuda":
             self.model = self.model.half()
